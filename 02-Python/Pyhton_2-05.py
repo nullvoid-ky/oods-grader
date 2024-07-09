@@ -1,12 +1,45 @@
-def vickrey_auction(bids):
-    if len(bids) < 2:
-        return "not enough bidder"
-    sorted_bids = sorted(bids, reverse=True)
-    if sorted_bids[0] == sorted_bids[1]:
-        return "error : have more than one highest bid"
-    winner_bid = sorted_bids[0]
-    second_highest_bid = sorted_bids[1]
-    return f"winner bid is {winner_bid} need to pay {second_highest_bid}"
-input_string = input("Enter All Bid : ")
-bids = list(map(int, input_string.split()))
-print(vickrey_auction(bids))
+class TorKham:
+
+	def __init__(self):
+		self.words = []
+
+	def restart(self):
+		self.words = []
+		 ### Enter Your Code Here ###
+		return "game restarted"
+
+	def play(self, word):
+		 ### Enter Your Code Here ###
+		a = str(self.words[-1:])[-4:-2].upper()
+		b = word[:2].upper()
+		if a != b and len(self.words)>0:
+			return f"'{word}' -> game over"
+		self.words.append(word)
+		return f"'{word}' -> {self.words}"
+
+
+
+
+torkham = TorKham()
+
+print("*** TorKham HanSaa ***")
+S = input("Enter Input : ").split(',')
+for command in S:
+	if ' ' in command:
+		k, v = command.split(' ')
+	else:
+		k = command
+	if k == 'R':
+		print(torkham.restart())
+	elif k == 'P':
+		print(torkham.play(v))
+	elif k == 'X' :
+		exit()
+	else:
+		print(f"'{k} {v}' is Invalid Input !!!")
+		exit()
+
+
+
+
+ ### Enter Your Code Here ###

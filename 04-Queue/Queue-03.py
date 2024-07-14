@@ -54,48 +54,46 @@ class Queue:
     def front(self):
         return self.top()
 
-# Input processing
-q = Queue()
-q2 = Queue()
-inp = input("Enter Input : ").split(",")
-for item in inp:
-    if " " in item:
-        a, b = item.split()
-        b = int(b)
-    else:
-        a = item
-    if a == "E":
-        q.enqueue(b)
-        txt = str(q.items)[1:-1]
-        print(f"{txt}")
-    elif a == "D":
-        if q.size() >= 1:
-            out = q.dequeue()
-            q2.enqueue(out)
-            txt = str(q.items)[1:-1]
-            if q.size():
-                if not q2.size():
-                    print(f"Empty <- {txt}")
-                else:
-                    print(f"{out} <- {txt}")
-            else:
-                if not q2.size():
-                    print(f"Empty  Empty")
-                else:
-                    print(f"{out} <- Empty")
+def solve(q,text, num):
+    if not (isinstance(text, str) and isinstance(num , int)):
+        return -2
+    if text == "D":
+        if q.is_empty():
+            return -1
         else:
-            print(f"Empty")
-       
-txt1 = str(q2.items)[1:-1]
-txt2 = str(q.items)[1:-1]
-if q.size():
-    if not q2.size():
-        print(f"Empty : {txt}")
-    else:
-        print(f"{txt1} : {txt}")
-else:
-    if not q2.size():
-        print(f"Empty : Empty")
-    else:
-        print(f"{txt1} : Empty")
+            return 1
+    elif text == "E":
+        return 2
 
+q = Queue()
+inp = input("input : ").split(",")
+errorDequeCount = 0
+errorInputCount = 0
+itr = 0
+# modified_list = [f"*{x}" for x in original_list]
+
+for item in inp:
+    text, num = item[0] ,item[1:]
+    print(f"Step : {text}{num}")
+    if not ((text == "E" or text =="D") and (num >= "0" and num <= "9")):
+        """input error"""
+        print(f"{q.items}")
+        errorInputCount+=1
+    elif text == "D":
+        num = int(num)
+        for i in range(num):
+            if not q.is_empty():
+                q.dequeue()
+            else:
+                errorDequeCount+=(num-i)
+                break
+        print(f"Dequeue : {q.items}")
+    elif text == "E":
+        num = int(num)
+        for _ in range(num):
+            q.enqueue("*"+str(itr))
+            itr += 1
+        print(f"Enqueue : {q.items}")
+    print(f"Error Dequeue : {errorDequeCount}")
+    print(f"Error input : {errorInputCount}")
+    print(f"--------------------")

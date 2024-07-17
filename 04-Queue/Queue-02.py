@@ -1,4 +1,59 @@
-w
+
+class Queue:
+    def __init__(self, lst=None):
+        self.items = lst if lst is not None else []
+
+    def pop(self):
+        if self.is_empty():
+            return None
+        return self.items.pop(0)
+
+    def push(self, item):
+        self.items.append(item)
+
+    def top(self):
+        return self.items[0] if not self.is_empty() else None
+
+    def __str__(self):
+        return str(self.items)
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def clear(self):
+        self.items = []
+
+    def reverse(self):
+        self.items.reverse()
+
+    def has(self, item):
+        return item in self.items
+
+    def index(self, item):
+        return self.items.index(item) if item in self.items else -1
+
+    def remove(self, item):
+        if item in self.items:
+            self.items.remove(item)
+
+    def sort(self):
+        self.items.sort()
+
+    def dequeue(self):
+        return self.pop()
+
+    def enqueue(self, item):
+        self.push(item)
+
+    def peek(self):
+        return self.top()
+
+    def size(self):
+        return len(self.items)
+
+    def front(self):
+        return self.top()
+
 inp = input("Enter people and time : ").split(" ")
 a, b = inp
 lst = list(a)

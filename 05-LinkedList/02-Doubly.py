@@ -59,44 +59,24 @@ class LinkedList:
             self.head = new_node
     
     def insert(self, pos, item):
-        size = self.size()
-        is_pos = False
         if pos < 0:
-            is_pos = True
-            self.reverse_list()
-            pos = abs(pos)
-        
-        if size == 0:
+            pos = self.size() + pos
+        if pos < 0:
+            pos = 0
+        if pos == 0 or self.head == None:
             self.add_head(item)
-            return
-        
-        if pos >= size:
-            pos = pos % (size+1)
-        
-        new_node = Node(item)
-        if pos == 0:
-            self.add_head(item)
-        elif pos == size:
+        elif pos >= self.size():
             self.append(item)
         else:
+            node = Node(item)
             cur = self.head
-            for _ in range(pos):
+            for i in range(pos - 1):
                 cur = cur.next
-            new_node.next = cur
-            new_node.pre = cur.pre
-            cur.pre.next = new_node
-            cur.pre = new_node
-        
-        if is_pos:
-            self.reverse_list()
-    
-    def reverse_list(self):
-        cur = self.head
-        self.head, self.tail = self.tail, self.head
-        while cur:
-            cur.pre, cur.next = cur.next, cur.pre
-            cur = cur.pre
-    
+            node.next = cur.next
+            node.pre = cur
+            if cur.next:
+                cur.next.pre = node
+            cur.next = node
     def search(self, item):
         cur = self.head
         while cur is not None:
@@ -152,6 +132,8 @@ class LinkedList:
 L = LinkedList()
 inp = input('Enter Input : ').split(',')
 for i in inp:
+    while i[0] == " ":
+        i = i[1:]
     if i[:2] == "AP":
         L.append(i[3:])
     elif i[:2] == "AH":

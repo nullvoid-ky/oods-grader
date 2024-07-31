@@ -1,15 +1,15 @@
-def generate_combinations(num_list, current, answer):
-    if current:
-        answer.add(int(current))
+def generate_combinations(num_list, mail_box, answer):
+    if mail_box:
+        answer.add(int(mail_box))
     if not num_list:
         return
-    def loop_index(num_list, current, answer, index):
+    def loop_index(num_list, mail_box, answer, index):
         if index == len(num_list):
             return
         new_num_list = num_list[:index] + num_list[index+1:]
-        generate_combinations(new_num_list, current + num_list[index], answer)
-        loop_index(num_list, current, answer, index + 1)
-    loop_index(num_list, current, answer, 0)
+        generate_combinations(new_num_list, mail_box + num_list[index], answer)
+        loop_index(num_list, mail_box, answer, index + 1)
+    loop_index(num_list, mail_box, answer, 0)
 try:
     num_list = input("Enter digits : ").split()
     for i in num_list:
@@ -23,3 +23,4 @@ try:
     print(f"Output : {output}")
 except:
     print("Invalid input")
+    
